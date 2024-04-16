@@ -17,7 +17,7 @@ app.use(cors({
 }));
 
 // Serve static files from the "client" directory
-app.use(express.static(path.join(__dirname, "..", "dist"))); // Refactoring may be required for the client directory path
+app.use(express.static(path.join(__dirname, "..", "public"))); // Refactoring may be required for the client directory path
 
 // Create an HTTP server instance
 const server = http.createServer(app);
