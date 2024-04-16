@@ -2,7 +2,7 @@ const { Pool } = require("pg");
 const db = new Pool({
   connectionString:
     process.env.DATABASE_URL ||
-    "postgresql://jsjulio:@localhost:5432/theArrowGame",
+    "postgresql://boom:@localhost:5432/theArrowGame",
   ssl: false, // turn off secure socket layer to allow postico / psql to access db info 
 });
 
