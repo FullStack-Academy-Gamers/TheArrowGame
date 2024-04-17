@@ -5,13 +5,13 @@
   "source": "./index.html",
   "browserslist": "> 0.25%, last 2 versions, not dead",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev --open",
-    "start": "cross-env NODE_ENV=production parcel index.html --no-cache --config ./parcel/.parcel.prod ",
+    "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev",
+    "start": "node server/index.js",
     "build": "parcel build index.html --public-url _relativeroute_ --no-source-maps --log-level error --config ./parcel/.parcel.prod",
     "server": "node server/index.js",
     "seed": "node server/db/seed.js",
     "heroku-prebuild": "echo This runs before Heroku installs dependencies.",
-    "heroku-postbuild": "parcel build index.html --public-url ./ --no-source-maps --config ./parcel/.parcel.prod",
+    "heroku-postbuild": "npm run build",
     "heroku-cleanup": "echo This runs after Heroku prunes and caches dependencies."
   },
   "repository": {
