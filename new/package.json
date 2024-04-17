@@ -6,12 +6,12 @@
   "browserslist": "> 0.25%, last 2 versions, not dead",
   "scripts": {
     "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev --open",
-    "start": "node server/index.js",
+    "start": "cross-env NODE_ENV=production parcel index.html --no-cache --config ./parcel/.parcel.prod --open",
     "build": "parcel build index.html --public-url _relativeroute_ --no-source-maps --log-level error --config ./parcel/.parcel.prod",
     "server": "node server/index.js",
     "seed": "node server/db/seed.js",
     "heroku-prebuild": "echo This runs before Heroku installs dependencies.",
-    "heroku-postbuild": "npm run build",
+    "heroku-postbuild": "echo This runs after Heroku installs dependencies, but before Heroku prunes and caches dependencies.",
     "heroku-cleanup": "echo This runs after Heroku prunes and caches dependencies."
   },
   "repository": {
@@ -33,7 +33,7 @@
     "crypto-browserify": "^3.12.0",
     "express": "^4.18.3",
     "os-browserify": "^0.3.0",
-    "parcel": "^2.12.0",
+    "parcel": "^2.11.0",
     "parcel-reporter-clean-dist": "^1.0.4",
     "parcel-reporter-static-files-copy": "^1.5.3",
     "path-browserify": "^1.0.1",
