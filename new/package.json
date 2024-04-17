@@ -6,12 +6,12 @@
   "browserslist": "> 0.25%, last 2 versions, not dead",
   "scripts": {
     "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev --open",
-    "start": "node app.js",
+    "start": "node server/index.js",
     "build": "parcel build index.html --public-url _relativeroute_ --no-source-maps --log-level error --config ./parcel/.parcel.prod",
     "server": "node server/index.js",
     "seed": "node server/db/seed.js",
     "heroku-prebuild": "echo This runs before Heroku installs dependencies.",
-    "heroku-postbuild": "echo This runs after Heroku installs dependencies, but before Heroku prunes and caches dependencies.",
+    "heroku-postbuild": "npm run build",
     "heroku-cleanup": "echo This runs after Heroku prunes and caches dependencies."
   },
   "repository": {
