@@ -5,8 +5,8 @@
   "source": "./index.html",
   "browserslist": "> 0.25%, last 2 versions, not dead",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev",
-    "start": "cross-env NODE_ENV=production parcel index.html --no-cache --config ./parcel/.parcel.prod ",
+    "dev": "cross-env NODE_ENV=development parcel index.html --no-cache --config ./parcel/.parcel.dev --open",
+    "start": "cross-env NODE_ENV=production parcel index.html --no-cache --config ./parcel/.parcel.prod --open",
     "build": "parcel build index.html --public-url _relativeroute_ --no-source-maps --log-level error --config ./parcel/.parcel.prod",
     "server": "node server/index.js",
     "seed": "node server/db/seed.js",
@@ -55,6 +55,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
+    "epress": "^0.0.1-security",
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
