@@ -8,12 +8,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     );
 
     this.name = name;
-    this.id = pid; // here this.id is the player's socket.id. which is that same as player.id
+    this.id = pid; //playerId
+    this.kills = 0;
     this.direction = "left";
     this.isGrounded = true;
     this.gameId = gameId;
-    this.lives = 3; // **NEWCONTENT: Sets player lives to 3
-    this.dead = false; // Add this line in your constructor to initialize the property
+    this.dead = false;
     this.scene = scene;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -82,11 +82,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Create arrow sprite at the player's position
     const arrow = this.scene.physics.add.sprite(this.x, this.y, "arrow");
+    arrow.shooterId = this.id;
     arrow.setOrigin(0.5, 0.5);
     arrow.setScale(1);
     const arrowBody = arrow.body;
     arrowBody.setSize(8, 3);
-
     if (this.direction === "left") {
       arrow.flipX = true;
       arrow.setPosition(this.x - 20, this.y);
@@ -121,7 +121,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   // ***NEW CONTENT*** ----------------------------------------------------------------
 
   loseLife() {
-    this.lives = 0;
+    if (this.lives > 0) {
+      this.lives -= 1;
+    }
 
     this.scene.cameras.main.shake(300, 0.01);
     this.playerDead();

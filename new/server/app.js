@@ -198,11 +198,11 @@ io.on("connection", (socket) => {
   //     }
   //   }
 
-    console.log(
-      `Player ${playerId} died - in game room: ${gameId}, removing dead player.`
-    );
-    socket.to(gameId).emit("removeDeadPlayer", { playerId, gameId });
-  });
+  //   console.log(
+  //     `Player ${playerId} died - in game room: ${gameId}, removing dead player.`
+  //   );
+  //   socket.to(gameId).emit("removeDeadPlayer", { playerId, gameId });
+  // });
 
   // STRETCH GOAL: Listen for arrowHitPlayer event from the game.js deduct player health and broadcast to all players in the same game room
 
@@ -272,5 +272,3 @@ server.listen(PORT, "localhost", () => {
 });
 
 module.exports = app;
-
-///

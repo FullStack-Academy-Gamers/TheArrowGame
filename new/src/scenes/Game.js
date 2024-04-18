@@ -86,7 +86,7 @@ export class Game extends Scene {
       this.gameId
     );
 
-    this.player.lives = 3;
+    this.player.lives = 0;
     // Establishes the collision layer within the game. Had to be layered
     // on top of everything to ensure proper collision detection
     this.tileset = this.map.addTilesetImage("Tileset", "tiles");
@@ -219,26 +219,23 @@ export class Game extends Scene {
         respawningPlayer.dead = false;
       }
     });
+
+    this.killDisplay = this.add.text(16, 16, `Kills: ${this.player.kills}`, {
+      fontSize: "32px",
+      fill: "#FFF",
+    });
   } //END Create
 
   // Create arrow sprite at the received position
   createArrow(x, y, direction, playerId) {
-    let xOffset = direction === "left" ? -20 : 20; // Set the offset based on the direction to deconflict shooter and arrow
+    let xOffset = direction === "left" ? 20 : 20; // Set the offset based on the direction to deconflict shooter and arrow
     let arrow = this.physics.add.sprite(x + xOffset, y, "arrow");
+    arrow.shooterId = playerId;
     arrow.setActive(true).setVisible(true);
     arrow.setOrigin(0.5, 0.5);
     arrow.setScale(1);
-
-    // arrowId is set to the playerId of the player who shot the arrow
-    arrow.arrowId = playerId;
-
-    // Set the arrow's properties
     this.physics.world.enable(arrow);
-
-    // Set the size of the arrow for collision detection
     arrow.body.setSize(8, 3);
-
-    // Set velocity based on the direction
     if (direction === "left") {
       arrow.setVelocityX(-600); // Set arrow speed
       arrow.setFlipX(true); // Flip the arrow to face left
@@ -248,26 +245,25 @@ export class Game extends Scene {
 
     // Add to arrows array
     this.arrows.push(arrow);
-    // console.log('arrow shot: ', arrow);
-  } //*create method ends here -------------------------------------------------------------------------
-
-  // ***NEW CONTENT*** ---------------------------------------------------------------------------------------------------------------------------------
+  }
 
   // Arrow collision detection with player
   arrowHitPlayer(arrow, player) {
-    // Ignore inactive arrows or players
     if (!arrow.active || !player.active || !player.visible) {
       return;
     }
     arrow.destroy();
-    player.loseLife(); //player loose life method is called which takes a life and chekcs if lives = 0. If lives = zero player.js emits a call to initiate the // TODO playerDied event
-    console.log("Arrow has hit a player!", arrow, player);
-    console.log("lives remaining:", player.lives);
+    player.loseLife(); // This might also handle the player's death
+    if (arrow.shooterId === this.playerId) {
+      this.player.kills++;
+      this.updateKillDisplay();
+    }
   }
 
-  //***End NEW CONTENT*** ---------------------------------------------------------------------------------------------------------------------------------
+  updateKillDisplay() {
+    this.killDisplay.setText("Kills: " + this.player.kills);
+  }
 
-  // Turns the other players' movements into an object that can be used in the update method
   createCursorsFromActiveKeys(activeKeys) {
     // debugger;
     return {
