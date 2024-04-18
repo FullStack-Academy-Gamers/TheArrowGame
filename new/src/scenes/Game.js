@@ -229,10 +229,10 @@ export class Game extends Scene {
 
     // Listen for timer updates
     this.socket.on("timerUpdate", (time) => {
-      console.log(`Timer Update Received: ${time}`); // Check if this logs when server sends update
       const minutes = Math.floor(time / 60);
       const seconds = time % 60;
       const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+      console.log(formattedTime);
       this.timerText.setText(`Time: ${formattedTime}`);
     });
 
