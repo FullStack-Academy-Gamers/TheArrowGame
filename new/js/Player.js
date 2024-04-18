@@ -82,7 +82,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Create arrow sprite at the player's position
     const arrow = this.scene.physics.add.sprite(this.x, this.y, "arrow");
-    arrow.shooterId = this.id;
     arrow.setOrigin(0.5, 0.5);
     arrow.setScale(1);
     const arrowBody = arrow.body;

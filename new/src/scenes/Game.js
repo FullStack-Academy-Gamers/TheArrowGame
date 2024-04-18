@@ -32,6 +32,7 @@ export class Game extends Scene {
     this.playerId = data.socket.id;
     this.socket = data.socket;
     this.sock = this.socket;
+    this.token = data.token;
 
     this.socket.emit("joinGameRoom", {
       gameId: this.gameId,
@@ -249,13 +250,20 @@ export class Game extends Scene {
 
   // Arrow collision detection with player
   arrowHitPlayer(arrow, player) {
-    if (!arrow.active || !player.active || !player.visible) {
-      return;
-    }
+    console.log(`Arrow from ${arrow.shooterId} hit player.id of ${player.id}`);
+    console.log("this.playerId is : ", this.playerId);
+    console.log("this.player.id is : ", this.player.id);
+    // if (!arrow.active || !player.active || !player.visible) {
+    //   return;
+    // }
     arrow.destroy();
-    player.loseLife(); // This might also handle the player's death
-    if (arrow.shooterId === this.playerId) {
+    player.loseLife();
+    // if shooter hit a different player add one
+    if (arrow.shooterId && this.playerId) {
       this.player.kills++;
+      console.log(
+        `Updated kill count for ${this.playerId}: ${this.player.kills}`
+      );
       this.updateKillDisplay();
     }
   }
