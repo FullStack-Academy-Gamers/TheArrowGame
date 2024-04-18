@@ -77,6 +77,11 @@ const players = new Map(); // Map to store player information - recieves player 
 
 const gameStates = {};
 
+//creating timer
+const gameDuration = 300; // Duration in seconds (e.g., 5 minutes)
+
+let remainingTime = gameDuration;
+
 // Once the game Scene socket is created, server will listen for the following events
 io.on("connection", (socket) => {
   // Get the map data and determine valid positions for player spawns
@@ -207,14 +212,43 @@ io.on("connection", (socket) => {
   // STRETCH GOAL: Listen for arrowHitPlayer event from the game.js deduct player health and broadcast to all players in the same game room
 
   //***END NEW CONTENT*** ---------------------------------------------------------------------------
-
-  //TODO Add game start logic
-  // Listen for game room creation requests
   socket.on("createGameRoom", (gameId) => {
     //create a new gameID
     if (!gameStates[gameId]) {
-      gameStates[gameId] = { players: new Set() };
-      console.log(`New Game room '${gameId}' created`);
+      gameStates[gameId] = {
+        players: new Set(),
+        gameTime: 300,
+        timer: null,
+      };
+
+      // Start game timer
+      gameStates[gameId].timer = setInterval(() => {
+        gameStates[gameId].gameTime--;
+        console.log(
+          `Timer Update for Game ${gameId}: ${gameStates[gameId].gameTime} seconds left`
+        ); // Debugging log
+
+        setInterval(() => {
+          socket.emit("timerUpdate", remainingTime--);
+          if (remainingTime <= 0) clearInterval(this);
+        }, 1000);
+
+        if (gameStates[gameId].gameTime <= 0) {
+          clearInterval(gameStates[gameId].timer);
+          socket.to(gameId).emit("endGame");
+          console.log(`Game in room ${gameId} has ended.`);
+          // Cleanup game room here if necessary
+        }
+      }, 1000); // update every second
+      console.log(`New Game room '${gameId}' created with timer.`);
+    }
+
+    if (gameStates[gameId].players.size >= 10) {
+      socket.emit("gameAtPlayerCapacity", {
+        message: "Game room is at capacity, create another room",
+        gameId,
+      });
+      return;
     }
 
     // Check if the game room is at capacity

@@ -186,8 +186,6 @@ export class Game extends Scene {
       ); // call the createArrow function to recreate arrow sprite at the position received from the server
     });
 
-    //! TEST
-
     // Client-side in Game scene
     this.socket.on("removeDeadPlayer", (data) => {
       // Check if the dead player is the local player
@@ -221,10 +219,36 @@ export class Game extends Scene {
       }
     });
 
-    this.killDisplay = this.add.text(16, 16, `Kills: ${this.player.kills}`, {
-      fontSize: "32px",
+    // Initialize the timer text with a default value
+    this.timerText = this.add
+      .text(10, 10, "Time: 00:00", {
+        font: "28px Arial",
+        fill: "#ffffff",
+      })
+      .setScrollFactor(0); // Make sure the text does not scroll with the camera
+
+    // Listen for timer updates
+    this.socket.on("timerUpdate", (time) => {
+      console.log(`Timer Update Received: ${time}`); // Check if this logs when server sends update
+      const minutes = Math.floor(time / 60);
+      const seconds = time % 60;
+      const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+      this.timerText.setText(`Time: ${formattedTime}`);
+    });
+
+    // Listen for the end game event
+    this.socket.on("endGame", () => {
+      console.log("Game Over, transitioning to GameOver scene.");
+      this.scene.start("GameOver");
+    });
+
+    this.killDisplay = this.add.text(0, 16, `Killed: ${this.player.kills}`, {
+      fontSize: "20px",
       fill: "#FFF",
     });
+
+    this.killDisplay.setOrigin(1, 0);
+    this.killDisplay.setX(this.cameras.main.width - 16);
   } //END Create
 
   // Create arrow sprite at the received position
