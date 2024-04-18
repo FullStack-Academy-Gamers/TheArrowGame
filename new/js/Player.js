@@ -9,7 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.name = name;
     this.id = pid; //playerId
-    this.kills = 0;
+    this.killed = 0;
     this.direction = "left";
     this.isGrounded = true;
     this.gameId = gameId;

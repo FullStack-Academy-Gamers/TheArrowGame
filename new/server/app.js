@@ -77,11 +77,6 @@ const players = new Map(); // Map to store player information - recieves player 
 
 const gameStates = {};
 
-//creating timer
-const gameDuration = 300; // Duration in seconds (e.g., 5 minutes)
-
-let remainingTime = gameDuration;
-
 // Once the game Scene socket is created, server will listen for the following events
 io.on("connection", (socket) => {
   // Get the map data and determine valid positions for player spawns
@@ -213,31 +208,23 @@ io.on("connection", (socket) => {
 
   //***END NEW CONTENT*** ---------------------------------------------------------------------------
   socket.on("createGameRoom", (gameId) => {
-    //create a new gameID
     if (!gameStates[gameId]) {
       gameStates[gameId] = {
         players: new Set(),
-        gameTime: 300,
+        gameTime: 30, // 5 minutes in seconds
         timer: null,
       };
 
-      // Start game timer
+      // Start a timer for this specific game room
       gameStates[gameId].timer = setInterval(() => {
-        gameStates[gameId].gameTime--;
-        console.log(
-          `Timer Update for Game ${gameId}: ${gameStates[gameId].gameTime} seconds left`
-        ); // Debugging log
-
-        setInterval(() => {
-          socket.emit("timerUpdate", remainingTime--);
-          if (remainingTime <= 0) clearInterval(this);
-        }, 1000);
-
-        if (gameStates[gameId].gameTime <= 0) {
+        if (gameStates[gameId].gameTime > 0) {
+          gameStates[gameId].gameTime--;
+          console.log(`Emitting timerUpdate: ${gameStates[gameId].gameTime}`); // Confirm this is happening
+          io.to(gameId).emit("timerUpdate", gameStates[gameId].gameTime);
+        } else {
           clearInterval(gameStates[gameId].timer);
-          socket.to(gameId).emit("endGame");
+          io.to(gameId).emit("endGame");
           console.log(`Game in room ${gameId} has ended.`);
-          // Cleanup game room here if necessary
         }
       }, 1000); // update every second
       console.log(`New Game room '${gameId}' created with timer.`);

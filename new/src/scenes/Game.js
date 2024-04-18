@@ -97,7 +97,7 @@ export class Game extends Scene {
     this.collisionLayer.setScale(scaleFactorX, scaleFactorY);
     this.collisionLayer.setCollisionByExclusion([-1]);
     this.collisionLayer.setCollisionByProperty({ collide: true });
-    this.collisionLayer.setAlpha(0.6);
+    this.collisionLayer.setAlpha(0);
 
     // Extract tile indices from the collision layer
     this.tileIndices = [];
@@ -229,20 +229,33 @@ export class Game extends Scene {
 
     // Listen for timer updates
     this.socket.on("timerUpdate", (time) => {
-      const minutes = Math.floor(time / 60);
-      const seconds = time % 60;
-      const formattedTime = `${minutes}:${seconds.toString().padStart(2, "0")}`;
-      console.log(formattedTime);
-      this.timerText.setText(`Time: ${formattedTime}`);
+      console.log(`Timer update received: ${time}`); // Does this log?
+      if (this.gameActive) {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        const formattedTime = `${minutes}:${seconds
+          .toString()
+          .padStart(2, "0")}`;
+        this.timerText.setText(`Time: ${formattedTime}`);
+      }
     });
 
     // Listen for the end game event
     this.socket.on("endGame", () => {
-      console.log("Game Over, transitioning to GameOver scene.");
-      this.scene.start("GameOver");
+      console.log("Received endGame event; transitioning to GameOver scene.");
+      if (
+        !this.scene.isActive("GameOver", {
+          socket: this.socket,
+          playerId: this.playerId,
+        })
+      ) {
+        // Check if GameOver scene is not already active
+        this.scene.start("GameOver");
+      } else {
+        console.log("GameOver scene is already active.");
+      }
     });
-
-    this.killDisplay = this.add.text(0, 16, `Killed: ${this.player.kills}`, {
+    this.killDisplay = this.add.text(0, 16, `Killed: ${this.player.killed}`, {
       fontSize: "20px",
       fill: "#FFF",
     });
@@ -284,16 +297,16 @@ export class Game extends Scene {
     player.loseLife();
     // if shooter hit a different player add one
     if (arrow.shooterId && this.playerId) {
-      this.player.kills++;
+      this.player.killed++;
       console.log(
-        `Updated kill count for ${this.playerId}: ${this.player.kills}`
+        `Updated kill count for ${this.playerId}: ${this.player.killed}`
       );
       this.updateKillDisplay();
     }
   }
 
   updateKillDisplay() {
-    this.killDisplay.setText("Kills: " + this.player.kills);
+    this.killDisplay.setText("killed: " + this.player.killed);
   }
 
   createCursorsFromActiveKeys(activeKeys) {
