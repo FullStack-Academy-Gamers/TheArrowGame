@@ -1,6 +1,4 @@
-# The Arrow Game
-[The Arrow Game!](#https://the-arrow-game-1bbc9552076c.herokuapp.com/) 🎯
-
+# The Arrow Game 🎯
 
 ## Table of Contents
 1. [Introduction](#introduction)
@@ -19,10 +17,11 @@
 14. [Cache Issues](#cache-issues)
 15. [Join the Phaser Community](#join-the-phaser-community)
 16. [Resources](#resources)
+17. [Developed By](#developed-by)
 
 
 # Introduction 
-The Arrow Game is an exciting 2D multiplayer web game where players compete in fast-paced arrow-shooting action. Built with JavaScript, Phaser 3, and Parcel 2, the game features dynamic maps created with Tiled and a robust backend using Socket.io, Node.js, and Express. The scalable server architecture allows for unlimited game room instances, offering a seamless multiplayer experience.
+[The Arrow Game!](#https://the-arrow-game-1bbc9552076c.herokuapp.com/) is an exciting 2D multiplayer web game where players compete in fast-paced arrow-shooting action. Built with JavaScript, Phaser 3, and Parcel 2, the game features dynamic maps created with Tiled and a robust backend using Socket.io, Node.js, and Express. The scalable server architecture allows for unlimited game room instances, offering a seamless multiplayer experience.
 
 
 ## Authentication, Game Room Selection, & Ready Up
@@ -217,13 +216,15 @@ All rights reserved.
 
 ### Resources 
 
-**Visit** [Get Started with Phaser 3: Fast and Painless] (https://blog.ourcade.co/posts/2019/get-started-phaser3-fast-painless/)
-
-**Clone** [template-parcel to set up a modern Javascript workspace capable of running npm ruin dev, and npm build seamlessly] (https://github.com/phaserjs/template-parcel)
-
-*Watch* [00 Phaser JS with ParcelJS + Typescript - To get and understanding of parcel] (https://www.youtube.com/watch?v=0FFv6DFPJAo)
-
-**Watch** [Javascript Game Development With Phaser - Tiles Mnaps & Plugins] (https://www.youtube.com/watch?v=MR2CvWxOEsw)
+**Visit:** [Get Started with Phaser 3: Fast and Painless](https://blog.ourcade.co/posts/2019/get-started-phaser3-fast-painless/)
+**Clone:** [template-parcel to set up a modern JavaScript workspace](https://github.com/phaserjs/template-parcel)
+**Watch:** [Phaser JS with ParcelJS + TypeScript](https://www.youtube.com/watch?v=0FFv6DFPJAo)
+**Watch:** [JavaScript Game Development With Phaser - Tiles Maps & Plugins](https://www.youtube.com/watch?v=MR2CvWxOEsw)
 
 
+## Developed By: 
 
+[Isaias Julio](https://github.com/JSjulio) | 
+[Ethan Hanes](https://github.com/KnowwPainn) | 
+[Mario Herrera](https://github.com/Mariohjr94) | 
+[Santiparp Mekmueangthong](https://github.com/boom-sm)
