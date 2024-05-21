@@ -222,9 +222,9 @@ All rights reserved.
 **Watch:** [JavaScript Game Development With Phaser - Tiles Maps & Plugins](https://www.youtube.com/watch?v=MR2CvWxOEsw)
 
 
-##Developed By: 
+## Developed By: 
 
-[Isaias Julio](https://github.com/JSjulio)
-[Ethan Hanes](https://github.com/KnowwPainn)
-[Mario Herrera](https://github.com/Mariohjr94)
+[Isaias Julio](https://github.com/JSjulio) | 
+[Ethan Hanes](https://github.com/KnowwPainn) | 
+[Mario Herrera](https://github.com/Mariohjr94) | 
 [Santiparp Mekmueangthong](https://github.com/boom-sm)
